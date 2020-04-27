@@ -30,20 +30,13 @@ session = Sessions()
 
 
 #Описание GET запросов
-@route("/albums")
-def get_albums():
-    try:
-        artist = str(request.query.artist)
-
-    except ValueError:
-        result = HTTPError(400, "Некорректные параметры")
-    else:
-        string=''
-        count = session.query(Album).filter_by(artist=artist).count()
-        for row in session.query(Album).filter_by(artist=artist).all():
+@route('/albums/<artist>', method='GET')
+def get_albums(artist):
+    string=''
+    count = session.query(Album).filter_by(artist=artist).count()
+    for row in session.query(Album).filter_by(artist=artist).all():
             string += row.album+'<br>'                  #BR для вывода по строчно
     return ' Всего альбомов: <strong>{}</strong>'.format(count)+'<br><br> Список всех альбомов группы <strong>{}</strong>:<br>'.format(artist),string
-
 
 #Описание POST запросов
 @route("/albums", method="POST")
