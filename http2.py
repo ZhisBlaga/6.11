@@ -1,5 +1,3 @@
-import json
-
 from bottle import route
 from bottle import run
 from bottle import HTTPError
